@@ -1,16 +1,42 @@
 
+const inputFeild = document.getElementById('search-data');
+console.log(inputFeild)
+const searchBtn = document.getElementById('btn-search"')
+
+inputFeild.addEventListener("keypress", function (event) {
+    if (event.key === 'Enter') {
+
+        searchBtn.onclick();
+
+    }
+
+})
+
+
+
+
+
 //get input data ,search data
 const getInputData = () => {
     const getInput = document.getElementById('search-data');
     const getData = getInput.value;
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${getData}`
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayFood(data.meals))
+    if (getData.length == 0) {
+        const text = document.getElementById('spinner')
+        text.innerHTML = `
+        <h2>please type somthing</h2>
+        `
+    }
+    else {
+        const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${getData}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displayFood(data.meals))
+    }
     getInput.value = "";
 }
 
 const displayFood = meals => {
+
     const rootDiv = document.getElementById('food-item');
     rootDiv.innerHTML = "";
     meals.forEach(meal => {
